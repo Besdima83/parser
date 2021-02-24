@@ -34,16 +34,9 @@ def get_content(html):
     return news
 
 
-def parse():
+def get_text_content():
     html = get_html(URL)
     if html.status_code == 200:
         return get_content(html.text)
     else:
         print('Error web host')
-
-def add_news_to_db(conn, cur, instance):
-    for new_par in parse():
-        url = new_par['link_news']
-        title = new_par['title']
-        text = new_par['content']
-        instance.insert_line(conn, cur, url, title, text)

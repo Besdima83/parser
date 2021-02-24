@@ -1,14 +1,10 @@
-import sqlite3
-from pages_db import PAGES_DB
-import parser
-
+from db_create import CreationBD
+from parser import get_text_content
 
 if __name__ == '__main__':
-    new_request = PAGES_DB()
-    conn = sqlite3.connect('site.db')
-    cur = conn.cursor()
-    new_request.create_table(conn, cur)
-    parser.add_news_to_db(conn, cur, new_request)
-    sor = new_request.get_pages(cur)
-    new_request.print_pages(sor)
-
+    appleinsider_bd = CreationBD()
+    for text_element in get_text_content():
+        appleinsider_bd.insert_line(text_element['link_news'],
+                                    text_element['title'],
+                                    text_element['content'])
+    appleinsider_bd.print_table_bd()
